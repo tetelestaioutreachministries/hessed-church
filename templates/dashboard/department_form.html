@@ -1,0 +1,17 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Edit Ministry{% endblock %}
+{% block dash_content %}
+<h2>Edit Ministry: {{ object.name }}</h2>
+
+<form method="post" class="dash-form">
+    {% csrf_token %}
+    {% for field in form %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {{ field.errors }}
+    {% endfor %}
+    <br><br>
+    <button type="submit" class="btn-dash">Save</button>
+    <a class="btn-dash btn-dash-secondary" href="{% url 'dashboard:department-list' %}">Cancel</a>
+</form>
+{% endblock %}

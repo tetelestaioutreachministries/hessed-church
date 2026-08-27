@@ -1,0 +1,30 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Subscribers{% endblock %}
+{% block dash_content %}
+<h2>Newsletter Subscribers</h2>
+<p>Everyone who signed up on the site to be emailed about new sermons and events.</p>
+
+<table class="dash-table">
+    <thead><tr><th>Email</th><th>Signed up</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+        {% for s in subscribers %}
+        <tr>
+            <td>{{ s.email }}</td>
+            <td>{{ s.created_at|date:"M d, Y" }}</td>
+            <td>{% if s.is_active %}<span class="pill pill-handled">Active</span>{% else %}<span class="pill pill-open">Unsubscribed</span>{% endif %}</td>
+            <td><a href="{% url 'dashboard:subscriber-toggle' s.pk %}">{% if s.is_active %}Unsubscribe{% else %}Reactivate{% endif %}</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No subscribers yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<p>
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">&laquo; Prev</a>{% endif %}
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>{% endif %}
+</p>
+{% endif %}
+{% endblock %}

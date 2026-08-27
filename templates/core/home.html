@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ CHURCH_NAME }}{% endblock %}
+{% block meta_description %}Welcome to {{ CHURCH_NAME }}. Join us for worship, discipleship, and connecting with a community devoted to Christ.{% endblock %}
+{% block og_description %}{{ CHURCH_NAME }}. Join us for worship, discipleship, and connecting with a community devoted to Christ.{% endblock %}
+{% block twitter_description %}{{ CHURCH_NAME }}. Join us for worship, discipleship, and connecting with a community devoted to Christ.{% endblock %}
+
+{% block page_header %}
+    <!-- hero
+    ================================================== -->
+    <section class="s-hero" data-parallax="scroll" data-image-src="{% static 'images/hero-bg-3000.jpg' %}" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
+
+        <div class="hero-left-bar"></div>
+
+        <div class="row hero-content">
+
+            <div class="column large-full hero-content__text">
+                <h1>
+                Welcome Home to<br>
+                {{ CHURCH_NAME }}.
+                </h1>
+            </div>
+
+        </div> <!-- end hero-content -->
+
+    </section> <!-- end s-hero -->
+{% endblock %}
+
+{% block content %}
+{% include "_messages.html" %}
+
+    <!-- about
+    ================================================== -->
+    <section id="about" class="s-about">
+
+        <div class="row row-y-center about-content">
+
+            <div class="column large-half medium-full">
+                <h3 class="subhead">Welcome to {{ CHURCH_NAME }}</h3>
+                <p class="lead">
+                We're a church family devoted to worship, growing in God's word,
+                and loving our community well. Whatever season of life you're in,
+                there's a place for you here.
+                </p>
+                <a href="{% url 'core:about' %}" class="btn btn--primary btn--about">More About {{ CHURCH_NAME }}</a>
+            </div>
+
+            <div class="column large-half medium-full">
+                <ul class="about-sched">
+                    <li>
+                        <h4>Main Church Service</h4>
+                        <p>
+                        Sunday - 9:00 AM | 1:00 PM <br>
+                        {{ CHURCH_ADDRESS }}
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Kids Church</h4>
+                        <p>
+                        Sunday - 9:00 AM | 1:00 PM <br>
+                        {{ CHURCH_ADDRESS }}
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Bible Study</h4>
+                        <p>
+                        Wednesday - 5:00 AM | 6:00 PM <br>
+                        {{ CHURCH_ADDRESS }}
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Prayer Meeting</h4>
+                        <p>
+                        Friday - 7:00 PM <br>
+                        {{ CHURCH_ADDRESS }}
+                        </p>
+                    </li>
+                </ul> <!-- end about-sched-->
+            </div>
+
+        </div> <!-- end about-content -->
+
+    </section> <!-- end s-about -->
+
+
+    <!-- connect
+    ================================================== -->
+    <section class="s-connect">
+
+        <div class="row connect-content">
+            <div class="column large-half tab-full">
+                <h3 class="display-1">Volunteer With Us.</h3>
+                <p>
+                Every ministry runs on people who show up. Whether it's greeting
+                at the door, leading worship, or serving behind the scenes, there's
+                a team that needs you.
+                </p>
+
+                <a href="{% url 'volunteer:page' %}" class="btn btn--primary h-full-width">I'm Interested</a>
+            </div>
+            <div class="column large-half tab-full">
+                <h3 class="display-1">Join a Connect Group.</h3>
+                <p>
+                Connect Groups are small communities that meet throughout the week
+                to grow together in faith, friendship, and life. Find one that fits you.
+                </p>
+
+                <a href="{% url 'groups:page' %}" class="btn btn--primary h-full-width">Learn More</a>
+            </div>
+        </div> <!-- end connect-content  -->
+
+    </section> <!-- end s-connect -->
+
+
+    <!-- events
+    ================================================== -->
+    <section class="s-events">
+
+        <div class="row events-header">
+            <div class="column">
+                <h2 class="subhead">Upcoming Events.</h2>
+            </div>
+        </div> <!-- end event-header -->
+
+        <div class="row block-large-1-2 block-900-full events-list">
+
+            {% for event in upcoming_events %}
+            <div class="column events-list__item">
+                <h3 class="display-1 events-list__item-title">
+                    <a href="{{ event.get_absolute_url }}" title="">{{ event.title }}.</a>
+                </h3>
+                <p>
+                {{ event.summary }}
+                </p>
+                <ul class="events-list__meta">
+                    <li class="events-list__meta-date">{{ event.date|date:"l, F d, Y" }}</li>
+                    <li class="events-list__meta-time">{{ event.time_range_display }}</li>
+                    <li class="events-list__meta-location">{{ event.location }}</li>
+                </ul>
+            </div> <!-- end events-list__item -->
+            {% empty %}
+            <div class="column">
+                <p>No upcoming events right now &mdash; check back soon.</p>
+            </div>
+            {% endfor %}
+
+        </div> <!-- end events-list -->
+
+    </section> <!-- end s-events -->
+
+
+    {% if current_series %}
+    <!-- series
+    ================================================== -->
+    <section class="s-series">
+
+        <div class="series-img" style="background-image: url('{% if current_series.image %}{{ current_series.image.url }}{% else %}{% static 'images/series-2000.jpg' %}{% endif %}');"></div>
+
+        <div class="row row-y-center series-content">
+
+            <div class="column large-half medium-full">
+                <h3 class="subhead">Current Series</h3>
+                <h2>{{ current_series.title }}</h2>
+                <p>
+                {{ current_series.description }}
+                </p>
+            </div> <!-- end column -->
+
+            <div class="column large-half medium-full">
+                <div class="series-content__buttons">
+                    {% if current_series.video_url %}<a href="{{ current_series.video_url }}" class="btn btn--large h-full-width">Watch the Video</a>{% endif %}
+                    {% if current_series.audio_url %}<a href="{{ current_series.audio_url }}" class="btn btn--large h-full-width">Listen To the Message</a>{% endif %}
+                    <a href="{% url 'sermons:list' %}" class="btn btn--large h-full-width">View All Sermons</a>
+                </div>
+
+                <div class="series-content__subscribe">
+                    <p>
+                    Never missed a message. Subscribe to our YouTube and Podcast channels.
+                    </p>
+
+                    <ul class="series-content__subscribe-links">
+                        <!--<li class="ss-apple-podcast"><a href="{{ current_series.apple_podcast_url|default:'#0' }}">Apple Podcast</a></li>
+                        <li class="ss-spotify"><a href="{{ current_series.spotify_url|default:'#0' }}">Spotify</a></li>
+                        <li class="ss-soundcloud"><a href="{{ current_series.soundcloud_url|default:'#0' }}">SoundCloud</a></li>-->
+                        <li class="ss-youtube"><a href="{{ current_series.youtube_url|default:'#0' }}">Youtube</a></li>
+                    </ul>
+                </div>
+            </div> <!-- end column -->
+
+        </div> <!-- series-content -->
+
+    </section> <!-- end s-series -->
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Overview{% endblock %}
+{% block dash_content %}
+<h2>Welcome back{% if request.user.first_name %}, {{ request.user.first_name }}{% endif %}.</h2>
+<p>Upload and manage everything that shows up on the website and in the app from here.</p>
+
+<div class="dash-grid">
+    <div class="dash-stat"><div class="num">{{ counts.devotionals }}</div><div class="label">Devotionals</div></div>
+    <div class="dash-stat"><div class="num">{{ counts.sermons }}</div><div class="label">Sermons</div></div>
+    <div class="dash-stat"><div class="num">{{ counts.events }}</div><div class="label">Events</div></div>
+    <div class="dash-stat"><div class="num">{{ counts.groups }}</div><div class="label">Connect Groups</div></div>
+    <div class="dash-stat"><div class="num">{{ counts.departments }}</div><div class="label">Ministries</div></div>
+    <div class="dash-stat"><div class="num">{{ counts.unhandled_inbox }}</div><div class="label">Unhandled Inbox</div></div>
+    <div class="dash-stat"><div class="num">{{ counts.subscribers }}</div><div class="label">Subscribers</div></div>
+</div>
+
+<div class="dash-card">
+    <h3>Quick actions</h3>
+    <p>
+        <a class="btn-dash" href="{% url 'dashboard:devotional-create' %}">+ Add Devotional</a>
+        &nbsp;
+        <a class="btn-dash" href="{% url 'dashboard:sermon-create' %}">+ Add Sermon</a>
+        &nbsp;
+        <a class="btn-dash" href="{% url 'dashboard:event-create' %}">+ Add Event</a>
+    </p>
+</div>
+{% endblock %}

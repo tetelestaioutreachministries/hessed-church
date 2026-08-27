@@ -1,0 +1,31 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Events{% endblock %}
+{% block dash_content %}
+<h2>Events</h2>
+<p><a class="btn-dash" href="{% url 'dashboard:event-create' %}">+ New Event</a></p>
+
+<table class="dash-table">
+    <thead><tr><th>Title</th><th>Date</th><th>Published</th><th>Poster</th><th></th></tr></thead>
+    <tbody>
+        {% for e in events %}
+        <tr>
+            <td>{{ e.title }}</td>
+            <td>{{ e.date }}</td>
+            <td>{% if e.is_published %}<span class="pill pill-handled">Yes</span>{% else %}<span class="pill pill-open">No</span>{% endif %}</td>
+            <td>{% if e.poster_url %}<span class="pill pill-handled">Uploaded</span>{% else %}<span class="pill pill-open">None</span>{% endif %}</td>
+            <td><a href="{% url 'dashboard:event-edit' e.pk %}">Edit</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No events yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<p>
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">&laquo; Prev</a>{% endif %}
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>{% endif %}
+</p>
+{% endif %}
+{% endblock %}

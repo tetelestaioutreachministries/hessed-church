@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ CHURCH_NAME }} - Unsubscribed{% endblock %}
+
+{% block page_header %}
+    <section class="page-header page-header--about">
+        <div class="gradient-overlay"></div>
+        <div class="row page-header__content">
+            <div class="column">
+                <h1>Unsubscribed</h1>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section class="page-content">
+        <div class="row">
+            <div class="column large-6 large-offset-3 tab-full" style="text-align:center;">
+                <p class="lead">
+                {{ email }} has been unsubscribed. You won't receive any more sermon or event emails from us.
+                </p>
+                <p><a href="{% url 'core:home' %}">&larr; Back to the homepage</a></p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

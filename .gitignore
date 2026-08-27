@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+venv/
+.env
+staticfiles/
+media/
+db.sqlite3
+*firebase-adminsdk*.json

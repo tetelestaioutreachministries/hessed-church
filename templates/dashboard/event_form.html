@@ -1,0 +1,24 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{% if object %}Edit{% else %}New{% endif %} Event{% endblock %}
+{% block dash_content %}
+<h2>{% if object %}Edit Event{% else %}New Event{% endif %}</h2>
+
+{% if object.poster_url %}
+<div class="dash-card">
+    A poster is already uploaded for this event — uploading a new one below will replace it.
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" class="dash-form">
+    {% csrf_token %}
+    {% for field in form %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+    {{ field.errors }}
+    {% endfor %}
+    <br><br>
+    <button type="submit" class="btn-dash">Save Event</button>
+    <a class="btn-dash btn-dash-secondary" href="{% url 'dashboard:event-list' %}">Cancel</a>
+</form>
+{% endblock %}

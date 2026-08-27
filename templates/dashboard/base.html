@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Church Dashboard{% endblock %} — {{ CHURCH_NAME }}</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body class="dash-body">
+    <div class="dash-wrap">
+        <aside class="dash-sidebar">
+            <h1>{{ CHURCH_NAME }} <span>Dashboard</span></h1>
+            <nav class="dash-nav">
+                <a href="{% url 'dashboard:home' %}" class="{% if active == 'home' %}active{% endif %}">Overview</a>
+                <a href="{% url 'dashboard:devotional-list' %}" class="{% if active == 'devotionals' %}active{% endif %}">Devotionals</a>
+                <a href="{% url 'dashboard:sermon-list' %}" class="{% if active == 'sermons' %}active{% endif %}">Sermons</a>
+                <a href="{% url 'dashboard:event-list' %}" class="{% if active == 'events' %}active{% endif %}">Events</a>
+                <a href="{% url 'dashboard:group-list' %}" class="{% if active == 'groups' %}active{% endif %}">Connect Groups</a>
+                <a href="{% url 'dashboard:department-list' %}" class="{% if active == 'departments' %}active{% endif %}">Volunteer Ministries</a>
+                <a href="{% url 'dashboard:inbox' %}" class="{% if active == 'inbox' %}active{% endif %}">Inbox</a>
+                <a href="{% url 'dashboard:subscriber-list' %}" class="{% if active == 'subscribers' %}active{% endif %}">Subscribers</a>
+                <a href="{% url 'core:home' %}">&larr; View Site</a>
+                <form method="post" action="{% url 'core:logout' %}" style="margin:0;">
+                    {% csrf_token %}
+                    <button type="submit" class="dash-nav__logout-btn">Log Out</button>
+                </form>
+            </nav>
+        </aside>
+        <main class="dash-main">
+            {% if messages %}
+            <div class="dash-messages">
+                {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+            </div>
+            {% endif %}
+            {% block dash_content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

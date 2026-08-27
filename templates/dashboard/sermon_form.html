@@ -1,0 +1,25 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{% if object %}Edit{% else %}New{% endif %} Sermon{% endblock %}
+{% block dash_content %}
+<h2>{% if object %}Edit Sermon{% else %}New Sermon{% endif %}</h2>
+
+{% if object.audio_url %}
+<div class="dash-card">
+    Current audio: <strong>{{ object.file_size_mb }}MB</strong> — uploading a new file below will replace it.
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" class="dash-form">
+    {% csrf_token %}
+    {% for field in form %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+    {{ field.errors }}
+    {% endfor %}
+    <br><br>
+    <button type="submit" class="btn-dash">Save Sermon</button>
+    <a class="btn-dash btn-dash-secondary" href="{% url 'dashboard:sermon-list' %}">Cancel</a>
+    <p class="help">If you attach an audio file, it'll take a moment to compress and upload to Cloudinary before the page redirects — that's normal for larger files.</p>
+</form>
+{% endblock %}

@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ CHURCH_NAME }} - About{% endblock %}
+{% block meta_description %}Learn about {{ CHURCH_NAME }}'s purpose, mission, values, and the team leading our church family.{% endblock %}
+{% block og_description %}Learn about {{ CHURCH_NAME }}'s purpose, mission, values, and the team leading our church family.{% endblock %}
+{% block twitter_description %}Learn about {{ CHURCH_NAME }}'s purpose, mission, values, and the team leading our church family.{% endblock %}
+
+{% block page_header %}
+    <!-- page header
+    ================================================== -->
+    <section class="page-header page-header--about">
+
+        <div class="gradient-overlay"></div>
+        <div class="row page-header__content">
+            <div class="column">
+                <h1>We Are {{ CHURCH_NAME }}</h1>
+            </div>
+        </div>
+
+    </section> <!-- end page-header -->
+{% endblock %}
+
+{% block content %}
+{% include "_messages.html" %}
+
+    <section class="page-content">
+
+        <div class="row">
+            <div class="column">
+
+                <p class="lead drop-cap">
+                {{ CHURCH_NAME }} exists to help people know Jesus and grow in
+                faith together. We believe church is meant to be a family &mdash;
+                a place where every person is known, cared for, and given room
+                to use their gifts to serve others.
+                </p>
+
+                <div class="row">
+                    <div class="column large-half medium-full">
+                        <h2>Our Purpose.</h2>
+                        <p>
+                        We exist to glorify God by making disciples who love Him,
+                        love one another, and love the world He created. Everything
+                        we do &mdash; our services, our groups, our ministries &mdash;
+                        flows from that purpose.
+
+                        We want every person who walks through our doors, online or
+                        in person, to encounter the love of Christ and find a place
+                        to belong.
+                        </p>
+                    </div>
+
+                    <div class="column large-half medium-full">
+                        <h2>Our Mission.</h2>
+                        <p>
+                        Our mission is to reach our city with the gospel, disciple
+                        believers into maturity, and send people out to serve God
+                        wherever they are planted.
+
+                        We do this through Sunday gatherings, Connect Groups,
+                        volunteer teams, and a commitment to prayer.
+                        </p>
+                    </div>
+                </div>
+
+                <blockquote cite="https://www.biblegateway.com/passage/?search=John+3%3A16-17">
+                    <p>
+                    For God so loved the world, that he gave his only Son, that whoever believes in
+                    him should not perish but have eternal life. For God did not send his Son into
+                    the world to condemn the world, but in order that the world might be
+                    saved through him.
+                    </p>
+                    <cite>
+                        <a href="#0">John 3:16-17 ESV</a>
+                    </cite>
+                </blockquote>
+
+                <br>
+
+                <h2>Our Values.</h2>
+                <div class="row block-large-1-2 block-1000-full block-list">
+                    <div class="column block-list__item">
+                        <h6>Identity in Christ</h6>
+
+                        <p>
+                        We believe our worth and identity are rooted in who God
+                        says we are, not in what we do or achieve. Every ministry
+                        and relationship here flows out of that security.
+                        </p>
+                    </div>
+
+                    <div class="column block-list__item">
+                        <h6>Church Is Family</h6>
+
+                        <p>
+                        We're not just an event you attend &mdash; we're a family
+                        you belong to. We want relationships here to be real,
+                        honest, and life-giving.
+                        </p>
+                    </div>
+
+                    <div class="column block-list__item">
+                        <h6>Kingdom Culture</h6>
+
+                        <p>
+                        We're building something bigger than any one ministry or
+                        program &mdash; a culture that reflects God's kingdom in
+                        how we treat one another and our city.
+                        </p>
+                    </div>
+
+                    <div class="column block-list__item">
+                        <h6>Spirit Led Life</h6>
+
+                        <p>
+                        We depend on the Holy Spirit to guide our decisions,
+                        our worship, and our everyday lives, not just our
+                        Sunday gatherings.
+                        </p>
+                    </div>
+
+                </div> <!-- end block-list -->
+
+                <br>
+
+                <h2>What We Believe.</h2>
+
+                <div class="row block-large-1-2 block-1000-full block-list">
+                    <div class="column block-list__item">
+                        <h6>The Bible.</h6>
+                        <p>
+                        We believe the Bible is God's inspired word and the
+                        final authority for faith and life.
+                        </p>
+                    </div>
+                    <div class="column block-list__item">
+                        <h6>
+                        The Trinity.
+                        </h6>
+                        <p>
+                        We believe in one God, eternally existing in three
+                        persons: Father, Son, and Holy Spirit.
+                        </p>
+                    </div>
+                    <div class="column block-list__item">
+                        <h6>
+                        Salvation by Grace
+                        </h6>
+                        <p>
+                        We believe salvation is a free gift received by grace
+                        through faith in Jesus Christ, not by works.
+                        </p>
+                    </div>
+                    <div class="column block-list__item">
+                        <h6>
+                        The Church.
+                        </h6>
+                        <p>
+                        We believe the church is God's family on mission
+                        together, called to worship, disciple, and serve.
+                        </p>
+                    </div>
+                </div> <!-- end block-list -->
+
+                <br>
+
+                <h2>Meet Our Team.</h2>
+
+                <div class="row block-large-1-2 block-tab-full church-staff">
+                    <div class="column church-staff__item">
+                        <div class="church-staff__header">
+                            <div class="church-staff__picture">
+                                <img src="{% static 'images/avatars/user-01.jpg' %}" alt="">
+                            </div>
+                            <h4 class="church-staff__name">
+                                Jonathan Doe
+                                <span class="church-staff__position">
+                                    Lead Pastor
+                                </span>
+                            </h4>
+                        </div>
+
+                        <p>
+                        Jonathan has served in pastoral ministry for over 15 years
+                        and leads our church with a heart for prayer and discipleship.
+                        </p>
+                    </div>
+
+                    <div class="column church-staff__item">
+                        <div class="church-staff__header">
+                            <div class="church-staff__picture">
+                                <img src="{% static 'images/avatars/user-02.jpg' %}" alt="">
+                            </div>
+                            <h4 class="church-staff__name">
+                                Jane Doe
+                                <span class="church-staff__position">
+                                    Associate Pastor
+                                </span>
+                            </h4>
+                        </div>
+
+                        <p>
+                        Jane oversees teaching and pastoral care, and leads our
+                        Connect Groups ministry.
+                        </p>
+                    </div>
+
+                    <div class="column church-staff__item">
+                        <div class="church-staff__header">
+                            <div class="church-staff__picture">
+                                <img src="{% static 'images/avatars/user-03.jpg' %}" alt="">
+                            </div>
+                            <h4 class="church-staff__name">
+                                Charles Spurgeon
+                                <span class="church-staff__position">
+                                    Associate Pastor
+                                </span>
+                            </h4>
+                        </div>
+
+                        <p>
+                        Charles leads our teaching team and preaches regularly
+                        across our services.
+                        </p>
+                    </div>
+
+                    <div class="column church-staff__item">
+                        <div class="church-staff__header">
+                            <div class="church-staff__picture">
+                                <img src="{% static 'images/avatars/user-04.jpg' %}" alt="">
+                            </div>
+                            <h4 class="church-staff__name">
+                                Martin Luther
+                                <span class="church-staff__position">
+                                    Associate Pastor
+                                </span>
+                            </h4>
+                        </div>
+
+                        <p>
+                        Martin oversees our volunteer teams and administrative
+                        ministries.
+                        </p>
+                    </div>
+
+                    <div class="column church-staff__item">
+                        <div class="church-staff__header">
+                            <div class="church-staff__picture">
+                                <img src="{% static 'images/avatars/user-05.jpg' %}" alt="">
+                            </div>
+                            <h4 class="church-staff__name">
+                                John Wesley
+                                <span class="church-staff__position">
+                                    Youth Pastor
+                                </span>
+                            </h4>
+                        </div>
+
+                        <p>
+                        John leads our youth and young adult ministries with a
+                        passion for discipleship.
+                        </p>
+                    </div>
+
+                    <div class="column church-staff__item">
+                        <div class="church-staff__header">
+                            <div class="church-staff__picture">
+                                <img src="{% static 'images/avatars/user-06.jpg' %}" alt="">
+                            </div>
+                            <h4 class="church-staff__name">
+                                Aimee Semple McPherson
+                                <span class="church-staff__position">
+                                    Kids Church Director
+                                </span>
+                            </h4>
+                        </div>
+
+                        <p>
+                        Aimee leads our Kids Church team and loves helping the
+                        next generation know Jesus.
+                        </p>
+                    </div>
+
+                </div> <!-- end church staff -->
+
+            </div>
+        </div>
+
+    </section> <!-- end page content -->
+{% endblock %}

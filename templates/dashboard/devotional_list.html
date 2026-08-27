@@ -1,0 +1,31 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Devotionals{% endblock %}
+{% block dash_content %}
+<h2>Devotionals</h2>
+<p><a class="btn-dash" href="{% url 'dashboard:devotional-create' %}">+ New Devotional</a></p>
+
+<table class="dash-table">
+    <thead><tr><th>Date</th><th>Title</th><th>Verse</th><th>Published</th><th></th></tr></thead>
+    <tbody>
+        {% for d in devotionals %}
+        <tr>
+            <td>{{ d.date }}</td>
+            <td>{{ d.title }}</td>
+            <td>{{ d.verse }}</td>
+            <td>{% if d.is_published %}<span class="pill pill-handled">Live</span>{% else %}<span class="pill pill-open">Hidden</span>{% endif %}</td>
+            <td><a href="{% url 'dashboard:devotional-edit' d.pk %}">Edit</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No devotionals yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<p>
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">&laquo; Prev</a>{% endif %}
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>{% endif %}
+</p>
+{% endif %}
+{% endblock %}

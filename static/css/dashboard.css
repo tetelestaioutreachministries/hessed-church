@@ -1,0 +1,187 @@
+/* Staff dashboard styling — separate from the public site's base.css/main.css
+   so the original template files stay untouched. Uses the same purple
+   palette (#2e1065 base, #8b5cf6 accent, #1e0a4a darkest). */
+
+:root {
+  --hesed-base: #2e1065;
+  --hesed-accent: #8b5cf6;
+  --hesed-darkest: #1e0a4a;
+}
+
+* { box-sizing: border-box; }
+
+body.dash-body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f7f5fb;
+  color: #23202b;
+}
+
+.dash-wrap {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dash-sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  background: var(--hesed-darkest);
+  color: #efeafc;
+  padding: 24px 0;
+}
+
+.dash-sidebar h1 {
+  font-size: 18px;
+  margin: 0 24px 24px;
+  color: #fff;
+}
+
+.dash-sidebar h1 span { color: var(--hesed-accent); }
+
+.dash-nav a {
+  display: block;
+  padding: 10px 24px;
+  color: #cabdf0;
+  text-decoration: none;
+  font-size: 14px;
+  border-left: 3px solid transparent;
+}
+
+.dash-nav a:hover, .dash-nav a.active {
+  background: rgba(139, 92, 246, 0.15);
+  border-left-color: var(--hesed-accent);
+  color: #fff;
+}
+
+.dash-nav__logout-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 24px;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  color: #cabdf0;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.dash-nav__logout-btn:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-left-color: var(--hesed-accent);
+  color: #fff;
+}
+
+.dash-main {
+  flex: 1;
+  padding: 32px 40px;
+  max-width: 900px;
+}
+
+.dash-main h2 {
+  margin-top: 0;
+  color: var(--hesed-base);
+}
+
+.dash-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.dash-stat {
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.dash-stat .num { font-size: 28px; font-weight: 700; color: var(--hesed-base); }
+.dash-stat .label { font-size: 13px; color: #6b6478; margin-top: 4px; }
+
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dash-table th, .dash-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.dash-table th { background: #f1edfa; color: var(--hesed-base); }
+
+.btn-dash {
+  display: inline-block;
+  padding: 9px 18px;
+  border-radius: 6px;
+  background: var(--hesed-accent);
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-dash:hover { background: var(--hesed-base); }
+
+.btn-dash-secondary {
+  background: transparent;
+  color: var(--hesed-base) !important;
+  border: 1px solid var(--hesed-base);
+}
+
+.dash-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 14px 0 4px;
+  color: var(--hesed-darkest);
+}
+
+.dash-form input[type=text], .dash-form input[type=email], .dash-form input[type=url],
+.dash-form input[type=date], .dash-form input[type=time], .dash-form input[type=number],
+.dash-form textarea, .dash-form select, .dash-form input[type=file] {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #d8d2e8;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.dash-form .help { font-size: 12px; color: #857e94; margin-top: 3px; }
+.dash-form .errorlist { color: #c0392b; font-size: 13px; margin: 4px 0; padding-left: 16px; }
+
+.dash-messages { margin-bottom: 20px; }
+.dash-messages p {
+  background: #eafaf1;
+  border-left: 3px solid #2ecc71;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+.pill-open { background: #fdecea; color: #c0392b; }
+.pill-handled { background: #eafaf1; color: #219653; }

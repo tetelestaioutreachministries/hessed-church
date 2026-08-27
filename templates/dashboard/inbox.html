@@ -1,0 +1,56 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Inbox{% endblock %}
+{% block dash_content %}
+<h2>Inbox</h2>
+<p>Submissions from the Contact, Volunteer, and Connect Group forms on the website.</p>
+
+<h3>Contact Messages</h3>
+<table class="dash-table">
+    <thead><tr><th>From</th><th>Message</th><th>Date</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+        {% for m in contact_messages %}
+        <tr>
+            <td>{{ m.name }}<br><small>{{ m.email }}</small></td>
+            <td>{{ m.message|truncatewords:15 }}</td>
+            <td>{{ m.created_at|date:"M d, Y" }}</td>
+            <td>{% if m.is_handled %}<span class="pill pill-handled">Handled</span>{% else %}<span class="pill pill-open">Open</span>{% endif %}</td>
+            <td><a href="{% url 'dashboard:inbox-toggle' 'contact' m.pk %}">{% if m.is_handled %}Reopen{% else %}Mark handled{% endif %}</a></td>
+        </tr>
+        {% empty %}<tr><td colspan="5">No contact messages.</td></tr>{% endfor %}
+    </tbody>
+</table>
+
+<br>
+<h3>Volunteer Applications</h3>
+<table class="dash-table">
+    <thead><tr><th>From</th><th>Ministry</th><th>Date</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+        {% for a in volunteer_applications %}
+        <tr>
+            <td>{{ a.name }}<br><small>{{ a.email }}</small></td>
+            <td>{{ a.department.name }}</td>
+            <td>{{ a.created_at|date:"M d, Y" }}</td>
+            <td>{% if a.is_handled %}<span class="pill pill-handled">Handled</span>{% else %}<span class="pill pill-open">Open</span>{% endif %}</td>
+            <td><a href="{% url 'dashboard:inbox-toggle' 'volunteer' a.pk %}">{% if a.is_handled %}Reopen{% else %}Mark handled{% endif %}</a></td>
+        </tr>
+        {% empty %}<tr><td colspan="5">No volunteer applications.</td></tr>{% endfor %}
+    </tbody>
+</table>
+
+<br>
+<h3>Connect Group Inquiries</h3>
+<table class="dash-table">
+    <thead><tr><th>From</th><th>Group</th><th>Date</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+        {% for i in group_inquiries %}
+        <tr>
+            <td>{{ i.name }}<br><small>{{ i.email }}</small></td>
+            <td>{{ i.group.name|default:"No preference" }}</td>
+            <td>{{ i.created_at|date:"M d, Y" }}</td>
+            <td>{% if i.is_handled %}<span class="pill pill-handled">Handled</span>{% else %}<span class="pill pill-open">Open</span>{% endif %}</td>
+            <td><a href="{% url 'dashboard:inbox-toggle' 'group' i.pk %}">{% if i.is_handled %}Reopen{% else %}Mark handled{% endif %}</a></td>
+        </tr>
+        {% empty %}<tr><td colspan="5">No group inquiries.</td></tr>{% endfor %}
+    </tbody>
+</table>
+{% endblock %}

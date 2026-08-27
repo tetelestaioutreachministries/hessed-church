@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{% if object %}Edit{% else %}New{% endif %} Devotional{% endblock %}
+{% block dash_content %}
+<h2>{% if object %}Edit Devotional{% else %}New Devotional{% endif %}</h2>
+
+<form method="post" class="dash-form">
+    {% csrf_token %}
+    {% for field in form %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+    {{ field.errors }}
+    {% endfor %}
+    <br><br>
+    <button type="submit" class="btn-dash">Save Devotional</button>
+    <a class="btn-dash btn-dash-secondary" href="{% url 'dashboard:devotional-list' %}">Cancel</a>
+</form>
+{% endblock %}

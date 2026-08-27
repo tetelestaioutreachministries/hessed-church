@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ CHURCH_NAME }} - {{ sermon.title }}{% endblock %}
+{% block meta_description %}{{ sermon.title }} — a sermon by {{ sermon.speaker }} at {{ CHURCH_NAME }}, from the "{{ sermon.series.title }}" series.{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ sermon.title }} — {{ CHURCH_NAME }}{% endblock %}
+{% block og_description %}A sermon by {{ sermon.speaker }} at {{ CHURCH_NAME }}, from the "{{ sermon.series.title }}" series.{% endblock %}
+{% block og_image %}{% if sermon.thumbnail_url %}{{ sermon.thumbnail_url }}{% else %}{{ DEFAULT_OG_IMAGE }}{% endif %}{% endblock %}
+{% block twitter_title %}{{ sermon.title }} — {{ CHURCH_NAME }}{% endblock %}
+{% block twitter_description %}A sermon by {{ sermon.speaker }} at {{ CHURCH_NAME }}, from the "{{ sermon.series.title }}" series.{% endblock %}
+{% block twitter_image %}{% if sermon.thumbnail_url %}{{ sermon.thumbnail_url }}{% else %}{{ DEFAULT_OG_IMAGE }}{% endif %}{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "{{ sermon.title|escapejs }}",
+    "datePublished": "{{ sermon.date|date:'c' }}",
+    "author": {"@type": "Person", "name": "{{ sermon.speaker|escapejs }}"},
+    "publisher": {"@type": "Organization", "name": "{{ CHURCH_NAME|escapejs }}"}
+    {% if sermon.video_url %},"video": {"@type": "VideoObject", "name": "{{ sermon.title|escapejs }}", "uploadDate": "{{ sermon.date|date:'c' }}", "contentUrl": "{{ sermon.video_url|escapejs }}", "thumbnailUrl": "{{ sermon.thumbnail_url|default:DEFAULT_OG_IMAGE|escapejs }}"}{% endif %}
+}
+</script>
+{% endblock %}
+
+{% block page_header %}
+    <section class="page-header page-header--events">
+        <div class="gradient-overlay"></div>
+        <div class="row page-header__content">
+            <div class="column">
+                <h1>Sermons</h1>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section class="page-content">
+        {% include "_messages.html" %}
+
+        <div class="row">
+            <div class="column">
+
+                <div class="event-content">
+                    <div class="event-title">
+                        <h2 class="display-1">{{ sermon.title }}</h2>
+                    </div>
+
+                    <ul class="event-meta">
+                        <li><strong>Speaker</strong>{{ sermon.speaker }}</li>
+                        <li><strong>Series</strong>{{ sermon.series.title }}</li>
+                        <li><strong>Date</strong>{{ sermon.date|date:"l, F d, Y" }}</li>
+                    </ul>
+
+                    {% if sermon.notes %}
+                    <p>{{ sermon.notes|linebreaks }}</p>
+                    {% endif %}
+
+                    <p>
+                        {% if sermon.audio_url %}
+                        <a class="btn btn--primary btn--large" href="{{ sermon.download_url }}" download>Download Audio{% if sermon.file_size_mb %} ({{ sermon.file_size_mb }}MB){% endif %}</a>
+                        {% endif %}
+                        {% if sermon.video_url %}
+                        <a class="btn btn--large" href="{{ sermon.video_url }}" target="_blank" rel="noopener">Watch on YouTube</a>
+                        {% endif %}
+                    </p>
+
+                    {% if not sermon.audio_url and not sermon.video_url %}
+                    <p style="color:#999;">Audio/video for this sermon isn't posted yet &mdash; check back soon.</p>
+                    {% endif %}
+                </div>
+
+                <p><a href="{% url 'sermons:list' %}">&larr; Back to all sermons</a></p>
+
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ CHURCH_NAME }} - {{ devotional.title }}{% endblock %}
+{% block meta_description %}{{ devotional.verse }} — {{ devotional.content|truncatechars:140 }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ devotional.title }} — {{ CHURCH_NAME }}{% endblock %}
+{% block og_description %}{{ devotional.verse }} — {{ devotional.content|truncatechars:140 }}{% endblock %}
+{% block twitter_title %}{{ devotional.title }} — {{ CHURCH_NAME }}{% endblock %}
+{% block twitter_description %}{{ devotional.verse }} — {{ devotional.content|truncatechars:140 }}{% endblock %}
+
+{% block page_header %}
+    <section class="page-header page-header--about">
+        <div class="gradient-overlay"></div>
+        <div class="row page-header__content">
+            <div class="column">
+                <h1>Daily Devotionals</h1>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section class="page-content">
+        {% include "_messages.html" %}
+
+        <div class="row">
+            <div class="column">
+                <h6>{{ devotional.date|date:"l, F d, Y" }}</h6>
+                <h2>{{ devotional.title }}</h2>
+                <p style="font-style:italic;">{{ devotional.verse }}</p>
+                <p>{{ devotional.content|linebreaks }}</p>
+
+                <p><a href="{% url 'devotionals:list' %}">&larr; Back to all devotionals</a></p>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

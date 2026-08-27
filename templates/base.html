@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>{% block title %}{{ CHURCH_NAME }}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ CHURCH_NAME }} — join us for worship, community, and growing in faith together.{% endblock %}">
+    <meta name="author" content="{{ CHURCH_NAME }}">
+    <link rel="canonical" href="{% block canonical_url %}{{ CANONICAL_URL }}{% endblock %}">
+    {% if GOOGLE_SITE_VERIFICATION %}<meta name="google-site-verification" content="{{ GOOGLE_SITE_VERIFICATION }}">{% endif %}
+
+    <meta property="og:site_name" content="{{ CHURCH_NAME }}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ CHURCH_NAME }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ CHURCH_NAME }} — join us for worship, community, and growing in faith together.{% endblock %}">
+    <meta property="og:url" content="{{ CANONICAL_URL }}">
+    <meta property="og:image" content="{% block og_image %}{{ DEFAULT_OG_IMAGE }}{% endblock %}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ CHURCH_NAME }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ CHURCH_NAME }} — join us for worship, community, and growing in faith together.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ DEFAULT_OG_IMAGE }}{% endblock %}">
+
+    {% block structured_data %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Church",
+        "name": "{{ CHURCH_NAME|escapejs }}",
+        "address": "{{ CHURCH_ADDRESS|escapejs }}",
+        "telephone": "{{ CHURCH_PHONE|escapejs }}",
+        "email": "{{ CHURCH_GENERAL_EMAIL|escapejs }}",
+        "url": "{{ SITE_BASE_URL|default:CANONICAL_URL|escapejs }}",
+        "image": "{{ DEFAULT_OG_IMAGE|escapejs }}"
+    }
+    </script>
+    {% endblock %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <script src="{% static 'js/modernizr.js' %}"></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+</head>
+
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-jump">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+
+    <!-- header
+    ================================================== -->
+    <header class="s-header">
+
+        <div class="header-logo">
+            <a class="site-logo" href="{% url 'core:home' %}">
+                <img src="{% static 'images/logo.svg' %}" alt="Homepage">
+            </a>
+        </div>
+
+        <nav class="header-nav-wrap">
+            <ul class="header-nav">
+                <li class="{% if active_nav == 'home' %}current{% endif %}"><a href="{% url 'core:home' %}" title="Home">Home</a></li>
+                <li class="{% if active_nav == 'about' %}current{% endif %}"><a href="{% url 'core:about' %}" title="About">About</a></li>
+                <li class="{% if active_nav == 'events' %}current{% endif %}"><a href="{% url 'events:list' %}" title="Events">Events</a></li>
+                <li class="{% if active_nav == 'sermons' %}current{% endif %}"><a href="{% url 'sermons:list' %}" title="Sermons">Sermons</a></li>
+                <li class="{% if active_nav == 'devotionals' %}current{% endif %}"><a href="{% url 'devotionals:list' %}" title="Devotionals">Devotionals</a></li>
+                <li class="{% if active_nav == 'volunteer' %}current{% endif %}"><a href="{% url 'volunteer:page' %}" title="Volunteer">Volunteer</a></li>
+                <li class="{% if active_nav == 'groups' %}current{% endif %}"><a href="{% url 'groups:page' %}" title="Connect Groups">Connect Groups</a></li>
+                <li class="{% if active_nav == 'contact' %}current{% endif %}"><a href="{% url 'contactus:page' %}" title="Contact us">Contact</a></li>
+                {% if request.user.is_staff %}
+                <li class="{% if active_nav == 'manage' %}current{% endif %}"><a href="{% url 'dashboard:home' %}" title="Manage Content">Manage Content</a></li>
+                <li>
+                    <form method="post" action="{% url 'core:logout' %}" style="display:inline; margin:0;">
+                        {% csrf_token %}
+                        <button type="submit" class="header-nav__logout-btn" title="Log Out">Log Out</button>
+                    </form>
+                </li>
+                {% elif not request.user.is_authenticated %}
+                <li><a href="{% url 'core:login' %}" title="Staff Log In">Staff Log In</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+    </header> <!-- end s-header -->
+
+    <style>
+        .header-nav__logout-btn {
+            background: none; border: none; cursor: pointer;
+            font: inherit; padding: 0; color: inherit; text-transform: inherit; letter-spacing: inherit;
+        }
+    </style>
+
+
+    {% block page_header %}{% endblock %}
+
+
+    <!-- page content
+    ================================================== -->
+    {% block content %}{% endblock %}
+
+
+    <!-- Social
+    ================================================== -->
+    <section class="s-social">
+
+        <div class="row social-content">
+            <div class="column">
+                <ul class="social-list">
+                    <li class="social-list__item">
+                        <a href="#0" title="">
+                            <span class="social-list__icon social-list__icon--facebook"></span>
+                            <span class="social-list__text">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="social-list__item">
+                        <a href="#0" title="">
+                            <span class="social-list__icon social-list__icon--twitter"></span>
+                            <span class="social-list__text">Twitter</span>
+                        </a>
+                    </li>
+                    <li class="social-list__item">
+                        <a href="#0" title="">
+                            <span class="social-list__icon social-list__icon--instagram"></span>
+                            <span class="social-list__text">Instagram</span>
+                        </a>
+                    </li>
+                    <li class="social-list__item">
+                        <a href="mailto:{{ CHURCH_GENERAL_EMAIL }}" title="">
+                            <span class="social-list__icon social-list__icon--email"></span>
+                            <span class="social-list__text">Email</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div> <!-- end social-content -->
+
+    </section> <!-- end s-social -->
+
+
+    <!-- footer
+    ================================================== -->
+    <footer class="s-footer">
+
+        <div class="row footer-top">
+            <div class="column large-4 medium-5 tab-full">
+                <div class="footer-logo">
+                    <a class="site-footer-logo" href="{% url 'core:home' %}">
+                        <img src="{% static 'images/logo.svg' %}" alt="Homepage">
+                    </a>
+                </div>  <!-- footer-logo -->
+                <p>
+                {{ CHURCH_NAME }} is a community devoted to worship, discipleship,
+                and serving one another and our city with the love of Christ.
+                </p>
+            </div>
+            <div class="column large-half tab-full">
+                <div class="row">
+                    <div class="column large-7 medium-full">
+                        <h4 class="h6">Our Location</h4>
+                        <p>
+                        {{ CHURCH_ADDRESS }}
+                        </p>
+
+                        <p>
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ CHURCH_ADDRESS|urlencode }}" target="_blank" class="btn btn--footer">Get Direction</a>
+                        </p>
+                    </div>
+                    <div class="column large-5 medium-full">
+                        <h4 class="h6">Quick Links</h4>
+                        <ul class="footer-list">
+                            <li><a href="{% url 'core:home' %}">Home</a></li>
+                            <li><a href="{% url 'core:about' %}">About</a></li>
+                            <li><a href="{% url 'sermons:list' %}">Sermons</a></li>
+                            <li><a href="{% url 'devotionals:list' %}">Devotionals</a></li>
+                            <li><a href="{% url 'volunteer:page' %}">Volunteer</a></li>
+                            <li><a href="{% url 'groups:page' %}">Connect Groups</a></li>
+                            <li><a href="{% url 'events:list' %}">Upcoming Events</a></li>
+                            <li><a href="{% url 'contactus:page' %}">Contact</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end footer-top -->
+        <div class="row">
+    <div class="column large-6 large-offset-3 tab-full" style="text-align:center; margin-bottom:40px;">
+        <h4 class="h6">Get Notified</h4>
+        <p>Get an email whenever we post a new sermon or event.</p>
+        <form method="post" action="{% url 'newsletter:subscribe' %}" autocomplete="off">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <div class="form-field">
+                <input type="email" name="email" required placeholder="Your email address" class="h-full-width h-remove-bottom">
+            </div>
+            <input type="submit" class="btn btn--primary h-full-width" value="Subscribe">
+        </form>
+    </div>
+</div>
+
+        <div class="row footer-bottom">
+            <div class="column ss-copyright">
+                <span>&copy; Copyright {{ CHURCH_NAME }} {% now "Y" %}</span>
+                <span>Design by <a href="https://www.styleshout.com/">StyleShout</a></span>
+            </div>
+        </div> <!-- footer-bottom -->
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0l8 9h-6v15h-4v-15h-6z"/></svg>
+            </a>
+        </div> <!-- ss-go-top -->
+
+    </footer> <!-- end s-footer -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

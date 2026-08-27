@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ CHURCH_NAME }} - {{ event.title }}{% endblock %}
+{% block meta_description %}{{ event.summary|truncatechars:160 }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ event.title }} — {{ CHURCH_NAME }}{% endblock %}
+{% block og_description %}{{ event.summary|truncatechars:160 }}{% endblock %}
+{% block og_image %}{% if event.poster_url %}{{ event.poster_url }}{% elif event.image %}{{ event.image.url }}{% else %}{{ DEFAULT_OG_IMAGE }}{% endif %}{% endblock %}
+{% block twitter_title %}{{ event.title }} — {{ CHURCH_NAME }}{% endblock %}
+{% block twitter_description %}{{ event.summary|truncatechars:160 }}{% endblock %}
+{% block twitter_image %}{% if event.poster_url %}{{ event.poster_url }}{% elif event.image %}{{ event.image.url }}{% else %}{{ DEFAULT_OG_IMAGE }}{% endif %}{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "{{ event.title|escapejs }}",
+    "startDate": "{{ event.date|date:'c' }}",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+        "@type": "Place",
+        "name": "{{ event.location|default:CHURCH_NAME|escapejs }}",
+        "address": "{{ CHURCH_ADDRESS|escapejs }}"
+    },
+    "description": "{{ event.summary|escapejs }}",
+    "organizer": {
+        "@type": "Organization",
+        "name": "{{ CHURCH_NAME|escapejs }}",
+        "url": "{{ SITE_BASE_URL|escapejs }}"
+    }
+    {% if event.poster_url %},"image": "{{ event.poster_url|escapejs }}"{% elif event.image %},"image": "{{ event.image.url|escapejs }}"{% endif %}
+}
+</script>
+{% endblock %}
+
+{% block page_header %}
+    <!-- page header
+    ================================================== -->
+    <section class="page-header page-header--events">
+
+        <div class="gradient-overlay"></div>
+        <div class="row page-header__content">
+            <div class="column">
+                <h1>Upcoming Events</h1>
+            </div>
+        </div>
+
+    </section> <!-- end page-header -->
+{% endblock %}
+
+{% block content %}
+    <section class="page-content">
+        {% include "_messages.html" %}
+
+        <div class="row">
+            <div class="column">
+
+                {% if event.image %}
+                <div class="media-wrap event-thumb">
+                    <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                </div> <!-- end media-wrap -->
+                {% endif %}
+
+                <div class="event-content">
+
+                    <div class="event-title">
+                        <h2 class="display-1">{{ event.title }}</h2>
+                    </div>
+
+                    <p>
+                    {{ event.display_description|linebreaks }}
+                    </p>
+
+                    <ul class="event-meta">
+                        {% if event.age_group %}<li><strong>Age</strong>{{ event.age_group }}</li>{% endif %}
+                        {% if event.cost %}<li><strong>Cost</strong>{{ event.cost }}</li>{% endif %}
+                        <li><strong>Date</strong>{{ event.date|date:"l, F d, Y" }}</li>
+                        {% if event.time_range_display %}<li><strong>Time</strong>{{ event.time_range_display }}</li>{% endif %}
+                        {% if event.location %}<li><strong>Place</strong>{{ event.location }}</li>{% endif %}
+                    </ul>
+
+                </div> <!-- end event-content -->
+
+
+            </div>
+        </div>
+
+    </section> <!-- end page content -->
+{% endblock %}

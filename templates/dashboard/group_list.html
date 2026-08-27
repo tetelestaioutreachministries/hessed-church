@@ -1,0 +1,23 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Connect Groups{% endblock %}
+{% block dash_content %}
+<h2>Connect Groups</h2>
+<p><a class="btn-dash" href="{% url 'dashboard:group-create' %}">+ New Group</a></p>
+
+<table class="dash-table">
+    <thead><tr><th>Name</th><th>Leader</th><th>Meets</th><th>Active</th><th></th></tr></thead>
+    <tbody>
+        {% for g in groups %}
+        <tr>
+            <td>{{ g.name }}</td>
+            <td>{{ g.leader_name }}</td>
+            <td>{{ g.meeting_day }} {{ g.meeting_time }}</td>
+            <td>{% if g.is_active %}<span class="pill pill-handled">Yes</span>{% else %}<span class="pill pill-open">No</span>{% endif %}</td>
+            <td><a href="{% url 'dashboard:group-edit' g.pk %}">Edit</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No connect groups yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

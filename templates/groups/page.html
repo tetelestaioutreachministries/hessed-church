@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}{{ CHURCH_NAME }} - Connect Groups{% endblock %}
+{% block meta_description %}Join a Connect Group at {{ CHURCH_NAME }} — small communities meeting throughout the week to grow together in faith.{% endblock %}
+{% block og_description %}Join a Connect Group at {{ CHURCH_NAME }} — small communities meeting throughout the week to grow together in faith.{% endblock %}
+{% block twitter_description %}Join a Connect Group at {{ CHURCH_NAME }} — small communities meeting throughout the week to grow together in faith.{% endblock %}
+
+{% block page_header %}
+    <!-- page header
+    ================================================== -->
+    <section class="page-header page-header--connect">
+
+        <div class="gradient-overlay"></div>
+        <div class="row page-header__content">
+            <div class="column">
+                <h1>Connect Groups</h1>
+            </div>
+        </div>
+
+    </section> <!-- end page-header -->
+{% endblock %}
+
+{% block content %}
+    <section class="page-content">
+        {% include "_messages.html" %}
+
+        <div class="row">
+            <div class="column">
+
+                <p class="lead drop-cap">
+                Connect Groups are small communities that meet throughout the
+                week to grow together in faith, friendship, and everyday life.
+                No matter where you are in your journey, there's a group for you.
+                </p>
+
+                <p>
+                Browse the groups currently meeting below, or fill out the form
+                and we'll help match you with one that fits your season of life.
+                </p>
+
+                {% if groups %}
+                <br>
+                <h2>Groups Currently Meeting.</h2>
+                <div class="row block-large-1-2 block-1000-full block-list">
+                    {% for group in groups %}
+                    <div class="column block-list__item">
+                        <h4 class="block-list__title-with-num">{{ group.name }}.</h4>
+                        <p>
+                        {% if group.meeting_day or group.meeting_time %}<strong>{{ group.meeting_day }} {{ group.meeting_time }}</strong><br>{% endif %}
+                        {% if group.location %}{{ group.location }}<br>{% endif %}
+                        {{ group.description }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div> <!-- end block-list -->
+                {% endif %}
+
+                <br>
+
+                <h2>Join a Connect Group.</h2>
+
+                <p>
+                Kindly fill-up the form below to help us better understand your profile and help you connect to a connect group that suits you.
+                </p>
+
+                <form name="connectForm" id="connectForm" class="connectForm" method="post" action="" autocomplete="off">
+                    {% csrf_token %}
+                    <fieldset>
+
+                        <div class="form-field">
+                            {{ form.name }}
+                            {{ form.name.errors }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.phone }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.facebook }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.age }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.availability }}
+                        </div>
+
+                        <br>
+                        <div class="form-field">
+                            <label for="{{ form.group.id_for_label }}">Preferred Group</label>
+                            <div class="ss-custom-select">
+                                {{ form.group }}
+                            </div>
+                        </div>
+
+                        <div class="comments form-field">
+                            {{ form.comments }}
+                        </div>
+
+                        <br>
+
+                        <input name="submit" id="submit" class="btn btn--primary btn--large h-full-width" value="Get Connected" type="submit">
+
+                    </fieldset>
+                </form> <!-- end connectForm -->
+
+            </div>
+        </div>
+
+    </section> <!-- end page content -->
+{% endblock %}

@@ -1,0 +1,46 @@
+# Fully-free deployment: Render free web service + Neon free Postgres +
+# an external scheduler (cron-job.org) triggering the daily devotional
+# push, instead of paid Render Postgres / Cron Jobs. See README-deploy.md
+# for the full walkthrough, including the free-tier trade-offs (cold starts
+# after 15 minutes idle).
+
+services:
+  # The Django site + API
+  - type: web
+    name: hesed-church-web
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt -r requirements-phase2.txt && python manage.py collectstatic --noinput && python manage.py migrate && python manage.py sync_site_domain"
+    startCommand: "gunicorn hesed_church.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        sync: false  # paste your Neon connection string here in the Render dashboard
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: PYTHON_VERSION
+        value: "3.12.3"
+      - key: CRON_SECRET_TOKEN
+        generateValue: true  # cron-job.org's daily request needs this exact value in its URL — see README-deploy.md
+      # Everything below is a secret / site-specific value — set these
+      # manually in the Render dashboard after the first deploy (Environment
+      # tab). They are intentionally left out of this file since it's meant
+      # to be safe to commit to a public or shared repo.
+      #   CHURCH_NAME, CHURCH_ADDRESS, CHURCH_PHONE, CHURCH_GENERAL_EMAIL
+      #   SITE_BASE_URL              (your real Render/custom domain, with https://)
+      #   DJANGO_CSRF_TRUSTED_ORIGINS (same domain, with https://)
+      #   DJANGO_EMAIL_BACKEND, DJANGO_EMAIL_HOST, DJANGO_EMAIL_PORT,
+      #   DJANGO_EMAIL_USE_TLS, DJANGO_EMAIL_HOST_USER, DJANGO_EMAIL_HOST_PASSWORD
+      #   CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
+      #   FIREBASE_SERVICE_ACCOUNT_JSON  (use Render's "Secret Files" feature — see README-deploy.md)
+      #   GOOGLE_OAUTH_CLIENT_ID
+
+# No Render Cron Job here (that's a paid feature). The daily devotional push
+# instead runs via an external free scheduler (cron-job.org) calling:
+#   https://<your-app>.onrender.com/devotionals/trigger-push/?token=<CRON_SECRET_TOKEN>
+# once a day at 03:00 UTC (= 6:00 AM Africa/Kampala). Set this up manually
+# after your first deploy — see README-deploy.md "Free daily devotional
+# trigger" section.

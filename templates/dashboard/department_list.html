@@ -1,0 +1,21 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Volunteer Ministries{% endblock %}
+{% block dash_content %}
+<h2>Volunteer Ministries</h2>
+<p>These are the 8 standard ministries — add a contact email for each so applications route correctly.</p>
+
+<table class="dash-table">
+    <thead><tr><th>Name</th><th>Contact</th><th>Order</th><th>Active</th><th></th></tr></thead>
+    <tbody>
+        {% for d in departments %}
+        <tr>
+            <td>{{ d.name }}</td>
+            <td>{% if d.contact_email %}{{ d.contact_email }}{% else %}<span class="pill pill-open">Not set — routes to general email</span>{% endif %}</td>
+            <td>{{ d.order }}</td>
+            <td>{% if d.is_active %}<span class="pill pill-handled">Yes</span>{% else %}<span class="pill pill-open">No</span>{% endif %}</td>
+            <td><a href="{% url 'dashboard:department-edit' d.pk %}">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

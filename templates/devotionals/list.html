@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{{ CHURCH_NAME }} - Devotionals{% endblock %}
+{% block meta_description %}Daily devotionals from {{ CHURCH_NAME }} — scripture and reflection to start your day with God's word.{% endblock %}
+{% block og_description %}Daily devotionals from {{ CHURCH_NAME }} — scripture and reflection to start your day with God's word.{% endblock %}
+{% block twitter_description %}Daily devotionals from {{ CHURCH_NAME }} — scripture and reflection to start your day with God's word.{% endblock %}
+
+{% block page_header %}
+    <section class="page-header page-header--about">
+        <div class="gradient-overlay"></div>
+        <div class="row page-header__content">
+            <div class="column">
+                <h1>Daily Devotionals</h1>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section class="page-content">
+        {% include "_messages.html" %}
+
+        <div class="row">
+            <div class="column">
+                {% for devotional in devotionals %}
+                <div class="block-list__item" style="margin-bottom:36px;">
+                    <h6>{{ devotional.date|date:"l, F d, Y" }}</h6>
+                    <h3>
+                        <a href="{% url 'devotionals:detail' devotional.pk %}">{{ devotional.title }}</a>
+                    </h3>
+                    <p style="font-style:italic;">{{ devotional.verse }}</p>
+                    <p>{{ devotional.content|truncatewords:35 }}</p>
+                    <p><a href="{% url 'devotionals:detail' devotional.pk %}">Read more &rarr;</a></p>
+                </div>
+                <hr>
+                {% empty %}
+                <p>No devotionals posted yet &mdash; check back soon.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if page_obj.paginator.num_pages > 1 %}
+        <div class="row">
+            <div class="column large-full">
+                <nav class="pgn">
+                    <ul>
+                        {% if page_obj.has_previous %}
+                        <li><a class="pgn__prev" href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                        <li>
+                            {% if num == page_obj.number %}
+                            <span class="pgn__num current">{{ num }}</span>
+                            {% else %}
+                            <a class="pgn__num" href="?page={{ num }}">{{ num }}</a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li><a class="pgn__next" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {% endif %}
+
+    </section>
+{% endblock %}

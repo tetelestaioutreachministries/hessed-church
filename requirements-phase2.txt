@@ -1,0 +1,18 @@
+
+# Phase 2 additions (required)
+djangorestframework>=3.15
+django-allauth>=65.0
+dj-rest-auth>=7.0
+cloudinary>=1.41
+Pillow>=10.4
+pydub>=0.25
+google-auth>=2.34
+firebase-admin>=6.5
+django-cloudinary-storage
+
+# Optional — only needed if you choose to run Celery/Redis for background
+# work beyond the daily devotional push (which uses plain cron instead).
+# See README-phase2.md "Scheduling the daily devotional push" section.
+# celery>=5.4
+# redis>=5.0
+# django-celery-beat>=2.7
